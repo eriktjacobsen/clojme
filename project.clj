@@ -5,6 +5,7 @@
                  [compojure "1.1.6"]
                  [cheshire "5.2.0"]
                  [clj-http "0.7.8"]
+                 [clj-time "0.6.0"]
                  ]
   :plugins [[lein-ring "0.8.8"]]
   :ring {:handler clojme.handler/app}

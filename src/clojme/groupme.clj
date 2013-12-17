@@ -1,6 +1,8 @@
 (ns clojme.groupme
+  (:refer-clojure :exclude [send])
   (:require [cheshire.core   :as json]
             [clj-http.client :as http]))
+
 
 (def bot-id "")
 
@@ -22,6 +24,7 @@
     (cond
       (= (:status response) 200) (:body response)
       (= (:status response) 202) (:body response)
+      (= (:status response) 400) (:body response)
       (= (:status response) 500)
           (do (println "Unknown 500: " (:body response)) (try-again))
       :else (do (println (str "Non-200: [" (:status response) "] " response)) (try-again))
@@ -30,6 +33,7 @@
 
 
 (defn send [message]
-  (api-post "https://api.groupme.com/v3/bots/post" 
+  (println "Would send: " message)
+  (api-post "https://api.groupme.com/v3/bots/post"
             (json/generate-string {:bot_id bot-id :text (str message)})
             nil))
