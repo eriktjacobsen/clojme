@@ -1,12 +1,10 @@
 (ns clojme.handler
   (:use compojure.core)
   (:require [compojure.handler :as handler]
-            [compojure.route :as route]))
+            [clojme.message :as msg]))
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
-  (route/resources "/")
-  (route/not-found "Not Found"))
+  (POST "/clojme" request (msg/handle (slurp (:body request)))))
 
 (def app
   (handler/site app-routes))
