@@ -33,7 +33,9 @@
 
 
 (defn send [message]
-  (println "Would send: " message)
-  (api-post "https://api.groupme.com/v3/bots/post"
-            (json/generate-string {:bot_id bot-id :text (str message)})
-            nil))
+  (when (and (not (nil? message)) (not (empty? message)))
+    (do
+      (println "Would send: " message)
+      (api-post "https://api.groupme.com/v3/bots/post"
+                (json/generate-string {:bot_id bot-id :text (str message)})
+                  nil))))
